@@ -1,9 +1,12 @@
-import express from "express";
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs, resolvers } from './graphql';
+
 const app = express();
 const port = 9000;
 
-//_ ackowledges and okays an unused variable
-app.get("/", (_req, res) => res.send("hello world"));
-app.listen(port);
+const server = new ApolloServer({ typeDefs, resolvers });
+server.applyMiddleware({ app, path: '/api' });
 
+app.listen(port);
 console.log(`[app] : http://localhost:${port}`);
